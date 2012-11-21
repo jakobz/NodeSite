@@ -27,6 +27,7 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
+app.post('/addItem', routes.addItem);
 
 var databaseUrl = "mydb"; // "username:password@example.com/mydb"
 var collections = ["test"]

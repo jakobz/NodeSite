@@ -1,8 +1,24 @@
 extends layout
 
+block scripts
+  script(src='javascript/todo.js')
+
 block content
-  h1= title
-  p Welcome to #{title}
-  ul
+    h1= title
+
     each item in items
-        li #{item.name}
+        .row
+            .span1(id=item._id)
+                i.icon-ok
+            .span11 #{item.name}
+  
+
+    form.form-horizontal
+        .control-group
+            label.control-label(for="newItemInput") New item
+            .controls
+                input#newItemInput(type="text")
+        .control-group
+            .controls
+                button.btn.btn-primary#addButton Add
+
