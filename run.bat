@@ -1,1 +1,2 @@
-start node app
+start rundb
+start runSupervisor
