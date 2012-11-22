@@ -8,25 +8,22 @@ html
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
         .container
-          a.btn.btn-navbar(data-toggle="collapse", data-target=".nav-collapse")
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
           a.brand(href="#") Project name
           .nav-collapse.collapse
             ul.nav
-              li.active
-                a(href="#") Home
               li
-                a(href="#about") About
+                a(href="/") Home
               li
-                a(href="#contact") Contact
+                a(href="/todo") ToDo
+              li
+                a(href="/contact") Contact
+            include login
 
     .container
         block content
 
     script(src='jquery/jquery-1.8.3.min.js')
-    script(src='jquery/jquery-1.8.3.min.js')
     script(src='bootstrap/js/bootstrap.min.js')
+    script(src='javascript/common.js')
  
     block scripts

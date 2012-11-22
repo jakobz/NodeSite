@@ -4,9 +4,8 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
-  , http = require('http')
-  , path = require('path');
+var http = require('http')
+var path = require('path');
 
 var app = express();
 
@@ -26,15 +25,11 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
-app.post('/addItem', routes.addItem);
-app.post('/changeItem', routes.changeItem);
-app.post('/clearItems', routes.clearItems);
+app.get('/', function(req, res) {
+  res.render("index", { title: "Home"})
+});
 
-
-var databaseUrl = "mydb"; // "username:password@example.com/mydb"
-var collections = ["test"]
-var db = require("mongojs").connect(databaseUrl, collections);
+require('./todo')(app)
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

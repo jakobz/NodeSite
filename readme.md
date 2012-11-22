@@ -22,3 +22,13 @@
         { "_id" : ObjectId("50acef44bd69ac60c43134c0"), "name" : "Yakov Zhmurov", "login" : "jakobz", "pwd" : "12345" }
         > db.users.remove()
 
+Документация
+------------
+
+* [MondoDB API] (http://api.mongodb.org/wiki/current/Developer%20Zone.html)
+  * [Inserting] (http://api.mongodb.org/wiki/current/Inserting.html)
+  * [Updating] (http://api.mongodb.org/wiki/current/Updating.html)
+  * [Querying] (http://api.mongodb.org/wiki/current/Querying.html)
+  * [Removing] (http://api.mongodb.org/wiki/current/Removing.html)
+* [Express API] (http://expressjs.com/api.html)
+* [Twitter Bootstrap Documentation] (http://twitter.github.com/bootstrap/scaffolding.html)
