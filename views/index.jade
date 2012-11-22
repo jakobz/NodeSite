@@ -4,21 +4,21 @@ block scripts
   script(src='javascript/todo.js')
 
 block content
-    h1= title
+    .row
+        .span8#todoList
+            each item in items
+                include todoItem  
 
-    each item in items
-        .row
-            .span1(id=item._id)
-                i.icon-ok
-            .span11 #{item.name}
-  
+    form.form-horizontal#newItemForm
+        .control-group
+            // label.control-label(for="newItemInput") New item
+            .controls
+                input#newItemInput(type="text", name="item[name]")
+                |  
+                button.btn.btn-primary(disabled=true)#addButton Add
+    form.form-horizontal#clearForm
+        .control-group
+            .controls
+                button.btn.btn-danger#clearButton Remove all
 
-    form.form-horizontal
-        .control-group
-            label.control-label(for="newItemInput") New item
-            .controls
-                input#newItemInput(type="text")
-        .control-group
-            .controls
-                button.btn.btn-primary#addButton Add
 

@@ -1,16 +1,27 @@
-var collections = ["test"]
-var db = require("mongojs").connect("localhost", collections)
+var collections = ["todo"]
+var mongo = require("mongojs")
+var db = mongo.connect("localhost", collections)
 
 exports.index = function(req, res){
-  db.test.find(function(err, items){
+  db.todo.find(function(err, items){
     res.render('index', { title: 'TODO List', items: items })
   })
 };
 
 exports.addItem = function(req, res) {
-    console.log("addItem")
-    console.log(req)
-    var result = { state: "ok" }
-    res.writeHead(200, {'content-type':'text/json'})
-    res.end(JSON.stringify(result))
+    var item = req.body.item
+    item.checked = false
+    db.todo.save(req.body.item, function() {
+        res.render('todoItem', { item: item })
+    }) 
+}
+
+exports.changeItem = function(req, res) {
+    db.todo.update({_id: mongo.ObjectId(req.body.id)}, { $set: { checked : req.body.item.checked == "true" } })
+}
+
+exports.clearItems = function(req, res) {
+    db.todo.remove({}, function() {
+        res.json({ status: "ok"})        
+    })
 }

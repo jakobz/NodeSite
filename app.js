@@ -28,6 +28,9 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.post('/addItem', routes.addItem);
+app.post('/changeItem', routes.changeItem);
+app.post('/clearItems', routes.clearItems);
+
 
 var databaseUrl = "mydb"; // "username:password@example.com/mydb"
 var collections = ["test"]
