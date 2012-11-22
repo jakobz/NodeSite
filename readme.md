@@ -32,3 +32,4 @@
   * [Removing] (http://api.mongodb.org/wiki/current/Removing.html)
 * [Express API] (http://expressjs.com/api.html)
 * [Twitter Bootstrap Documentation] (http://twitter.github.com/bootstrap/scaffolding.html)
+* [Jade templates] (https://github.com/visionmedia/jade#readme)

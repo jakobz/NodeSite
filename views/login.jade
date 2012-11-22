@@ -1,8 +1,10 @@
-form.navbar-form.pull-right
-    input.span2(type="text", placeholder="Email")
+form.navbar-form.pull-right(method="POST", action="login")
+    input.span2(type="text", placeholder="Email", name="username")
     | 
-    input.span2(type="password", placeholder="Password")
+    input.span2(type="password", placeholder="Password", name="password")
     | 
     button.btn(type="submit", name="login") Sign in
     | 
-    button.btn(type="submit", name="register") Register    
+    if typeof(message) !== "undefined"
+        #{message}
+//    button.btn(type="submit", name="register") Register    
