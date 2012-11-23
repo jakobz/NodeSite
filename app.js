@@ -17,6 +17,15 @@ var server_config = new Server('localhost', 27017, {auto_reconnect: true, native
 var app = express();
 var db = require("mongojs").connect("dev", ["users", "sessions"])
 
+function userLoader (req, res, next) {
+   if (req.method === 'GET') { 
+     // Do some code
+   }
+
+   // keep executing the router middleware
+   next()
+}
+
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
@@ -25,9 +34,14 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.cookieParser());
-
   app.use(express.session({ secret: "123dsad", store: new mongoStore({server_config : server_config}) }));
   app.use(express.methodOverride());
+
+  app.use(function(req, res, next){
+    res.locals.user = req.session.user || null
+    next();
+  });
+
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -41,7 +55,22 @@ app.get('/', function(req, res) {
   req.session.counter = req.session.counter || 0;
   req.session.counter++;
 
-  res.render("index", { title: "Home", counter: req.session.counter})
+  res.locals.title = "Home"
+  res.locals.counter = req.session.counter
+  res.locals.message = "ddddd"
+
+  res.render("index")
+});
+
+app.post('/login', function(req, res) {
+  var user = req.body.user;
+  req.session.user = user;
+  res.redirect('/')
+});
+
+app.post('/logout', function(req, res) {
+  req.session.user = null;
+  res.redirect('/')
 });
 
 require('./todo')(app)
