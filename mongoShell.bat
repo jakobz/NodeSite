@@ -1,1 +1,1 @@
-mongo localhost 
+mongo dev

@@ -6,13 +6,16 @@
 var express = require('express')
 var http = require('http')
 var path = require('path');
+var mongoStore = require('connect-mongodb');
+var Server = require('mongodb').Server
+var server_config = new Server('localhost', 27017, {auto_reconnect: true, native_parser: true})
 
-var passport = require('passport')
-var LocalStrategy = require('passport-local').Strategy;
+// var passport = require('passport')
+// var LocalStrategy = require('passport-local').Strategy;
 
 
 var app = express();
-var db = require("mongojs").connect("localhost", ["users"])
+var db = require("mongojs").connect("dev", ["users", "sessions"])
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -21,6 +24,9 @@ app.configure(function(){
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
+  app.use(express.cookieParser());
+
+  app.use(express.session({ secret: "123dsad", store: new mongoStore({server_config : server_config}) }));
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
@@ -31,31 +37,12 @@ app.configure('development', function(){
 });
 
 app.get('/', function(req, res) {
-  res.render("index", { title: "Home"})
+  // Session test
+  req.session.counter = req.session.counter || 0;
+  req.session.counter++;
+
+  res.render("index", { title: "Home", counter: req.session.counter})
 });
-
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    db.users.find({ username: username }, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (user.password !== password) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
-
-app.post('/login',
-  passport.authenticate('local', { successRedirect: '/asdasdasd',
-                                   failureRedirect: '/',
-                                   failureFlash: false })
-);
-
 
 require('./todo')(app)
 
